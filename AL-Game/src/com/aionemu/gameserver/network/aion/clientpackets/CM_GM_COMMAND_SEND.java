@@ -23,6 +23,7 @@ import com.aionemu.gameserver.model.gm.GmPanelCommands;
 import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection.State;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdAddSkill;
+import com.aionemu.gameserver.network.aion.gmhandler.CmdCombineSkill;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdAttrBonus;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdChangeClass;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdDeleteQuest;
@@ -78,15 +79,11 @@ public class CM_GM_COMMAND_SEND extends AionClientPacket {
 		if (admin == null) {
 			return;
 		}
-
-		// check accesslevel - not needed but to be sure
 		if (admin.getAccessLevel() < AdminConfig.GM_PANEL) {
 			return;
 		}
-
 		switch (GmPanelCommands.getValue(cmd)) {
 		case REMOVE_SKILL_DELAY_ALL:
-			// new CmdRemoveSkillDelayAll(admin); // TODO
 			break;
 		case ITEMCOOLTIME:
 			new CmdItemCoolTime(admin);
@@ -159,11 +156,13 @@ public class CM_GM_COMMAND_SEND extends AionClientPacket {
 		case SET_ENCHANTCOUNT:
 			new CmdSetEnchantCount(admin, params);
 			break;			
-		case SETINVENTORYGROWTH: // Este é o seu novo comando
+		case SETINVENTORYGROWTH:
 			new CmdSetInventoryGrowth(admin, params);
 			break;
 		case SKILLPOINT:
 		case COMBINESKILL:
+			new CmdCombineSkill(admin, params);
+			break;
 		case DELETESKILL:
 		case ENCHANT100:
 		case SEARCH:
