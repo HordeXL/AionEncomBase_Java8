@@ -28,6 +28,7 @@ import com.aionemu.gameserver.network.aion.gmhandler.CmdChangeClass;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdDeleteQuest;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdEndQuest;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdGiveTitle;
+import com.aionemu.gameserver.network.aion.gmhandler.CmdSetInventoryGrowth;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdInvisible;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdItemCoolTime;
 import com.aionemu.gameserver.network.aion.gmhandler.CmdLevelUpDown;
@@ -158,7 +159,9 @@ public class CM_GM_COMMAND_SEND extends AionClientPacket {
 		case SET_ENCHANTCOUNT:
 			new CmdSetEnchantCount(admin, params);
 			break;			
-		case SETINVENTORYGROWTH:
+		case SETINVENTORYGROWTH: // Este é o seu novo comando
+			new CmdSetInventoryGrowth(admin, params);
+			break;
 		case SKILLPOINT:
 		case COMBINESKILL:
 		case DELETESKILL:
