@@ -79,6 +79,7 @@ public class _3969SexiestManAlive extends QuestHandler {
 				else if (env.getDialog() == QuestDialog.STEP_TO_1) {
                     removeQuestItem(env, 182206126, 1);
 					qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+					updateQuestStatus(env);
                     return closeDialogWindow(env);
 				}
 			}

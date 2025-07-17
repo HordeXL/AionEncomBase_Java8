@@ -101,7 +101,6 @@ public class _1661Finding_The_Forges extends QuestHandler {
 			if (zoneName == ZoneName.get("LF3_SENSORY_AREA_Q1661_A_210040000")) {
                 if (qs.getQuestVarById(1) == 0) {
  			        qs.setQuestVarById(0, qs.getQuestVarById(0) + 16);
-                    qs.setQuestVarById(1,1);
                     updateQuestStatus(env); 
 		        if (qs.getQuestVarById(0) == 112) {
                     qs.setQuestVarById(1,0);
@@ -116,7 +115,6 @@ public class _1661Finding_The_Forges extends QuestHandler {
             else if (zoneName == ZoneName.get("LF3_SENSORY_AREA_Q1661_B_210040000")) {
                  if (qs.getQuestVarById(2) == 0) {
  			        qs.setQuestVarById(0, qs.getQuestVarById(0) + 32);
-                    qs.setQuestVarById(2,1);
                     updateQuestStatus(env); 
 		         if (qs.getQuestVarById(0) == 112) {
                     qs.setQuestVarById(1,0);
@@ -131,7 +129,6 @@ public class _1661Finding_The_Forges extends QuestHandler {
             else if (zoneName == ZoneName.get("LF3_SENSORY_AREA_Q1661_C_210040000")) {
                  if (qs.getQuestVarById(3) == 0) {
  			        qs.setQuestVarById(0, qs.getQuestVarById(0) + 64);
-                    qs.setQuestVarById(3,1);
                     updateQuestStatus(env); 
 		         if (qs.getQuestVarById(0) == 112) {
                     qs.setQuestVarById(1,0);

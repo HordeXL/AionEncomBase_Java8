@@ -60,6 +60,9 @@ public class _1626LightThePath extends QuestHandler {
 					case START_DIALOG: {
 						return sendQuestDialog(env, 4762);
 					}
+					case ASK_ACCEPTION: {
+						return sendQuestDialog(env, 4);
+					}
 					case ACCEPT_QUEST: {
 						if (player.getInventory().getItemCountByItemId(182201788) == 0) {
 						    return sendQuestStartDialog(env, 182201788, 1);
@@ -75,8 +78,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700221: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 0, 1, false, 0); // 1
 							}
 						}
@@ -86,8 +88,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700222: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 1, 2, false, 0); // 2
 							}
 						}
@@ -97,8 +98,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700223: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 2, 3, false, 0); // 3
 							}
 						}
@@ -107,8 +107,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700224: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 3, 4, false, 0); // 4
 							}
 						}
@@ -117,8 +116,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700225: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 4, 5, false, 0); // 5
 							}
 						}
@@ -127,8 +125,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700226: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 5, 6, false, 0); // 6
 							}
 						}
@@ -137,8 +134,7 @@ public class _1626LightThePath extends QuestHandler {
 				case 700227: {
 					switch (env.getDialog()) {
 						case USE_OBJECT: {
-							long itemCount1 = player.getInventory().getItemCountByItemId(182201788);
-							if (itemCount1 == 1) {
+						if (player.getInventory().getItemCountByItemId(182201788) == 1) {
 								return useQuestObject(env, 6, 6, true, 0); // reward
 							}
 						}
