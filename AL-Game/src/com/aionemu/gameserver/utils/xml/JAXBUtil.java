@@ -1,173 +1,162 @@
 package com.aionemu.gameserver.utils.xml;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.Future;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.ValidationEvent;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
+import javax.xml.validation.Validator;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
+
+import java.net.URL;
+import java.io.IOException;
+
+import javax.xml.XMLConstants;
+import javax.xml.validation.SchemaFactory;
+
 
 /**
- * @author , Neon
+ * @author ginho1
+ * @author Dezalmado (compilation error correction)
  */
 public class JAXBUtil {
 
-	private static final Map<Class<?>, Future<JAXBContext>> CONTEXTS = new ConcurrentHashMap<>();
+	private static final Logger log = LoggerFactory.getLogger(JAXBUtil.class);
 
-	public static void preLoadContextAsync(Class<?> clazz) {
-		CONTEXTS.put(clazz, ForkJoinPool.commonPool().submit(() -> JAXBContext.newInstance(clazz)));
-	}
-
-	public static String serialize(Object obj) {
-		return serialize(obj, (String) null); 
-	}
-
-	public static String serialize(Object obj, String schemaFile) {
+	public static <T> T unmarshal(InputStream is, Class<T> clazz) {
 		try {
-			JAXBContext jc = JAXBContext.newInstance(obj.getClass());
-			Marshaller m = jc.createMarshaller();
-			if (schemaFile != null)
-				m.setSchema(XmlUtil.getSchema(schemaFile));
-			m.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			unmarshaller.setSchema(getSchema(clazz));
+			unmarshaller.setEventHandler(new XmlValidationHandler());
+			return (T) unmarshaller.unmarshal(is);
+		}
+		catch (JAXBException e) {
+			log.error("Error unmarshalling file.", e);
+		}
+		return null;
+	}
+
+    public static <T> T unmarshal(File file, Class<T> clazz) throws JAXBException {
+        try (InputStream is = new java.io.FileInputStream(file)) {
+            return unmarshal(is, clazz);
+        } catch (java.io.IOException e) {
+            throw new JAXBException("Error reading file: " + file.getAbsolutePath(), e);
+        }
+    }
+
+	public static <T> T unmarshal(String stream, Class<T> clazz) {
+		try {
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			unmarshaller.setSchema(getSchema(clazz));
+			unmarshaller.setEventHandler(new XmlValidationHandler());
+			return (T) unmarshaller.unmarshal(new StringReader(stream));
+		}
+		catch (JAXBException e) {
+			log.error("Error unmarshalling file.", e);
+		}
+		return null;
+	}
+
+	public static <T> void marshal(String file, Class<T> clazz, T object) {
+		try {
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.setEventHandler(new XmlValidationHandler());
+			marshaller.marshal(object, new File(file));
+		}
+		catch (JAXBException e) {
+			log.error("Error marshalling file.", e);
+		}
+	}
+
+	public static <T> String marshal(Class<T> clazz, T object) {
+		try {
 			StringWriter sw = new StringWriter();
-			m.marshal(obj, sw);
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.setEventHandler(new XmlValidationHandler());
+			marshaller.marshal(object, sw);
 			return sw.toString();
 		}
 		catch (JAXBException e) {
-			throw new RuntimeException(e);
+			log.error("Error marshalling file.", e);
 		}
+		return null;
 	}
 
-	public static void serialize(Object obj, File file) {
-		serialize(obj, file, null);
-	}
-
-	public static void serialize(Object obj, File file, String schemaFile) {
+	public static <T> boolean validate(String xml, Class<T> clazz) {
 		try {
-			JAXBContext jc = JAXBContext.newInstance(obj.getClass());
-			Marshaller m = jc.createMarshaller();
-			if (schemaFile != null)
-				m.setSchema(XmlUtil.getSchema(schemaFile)); // Depende de XmlUtil
-			m.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			m.marshal(obj, file);
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			unmarshaller.setSchema(getSchema(clazz));
+			unmarshaller.setEventHandler(new XmlValidationHandler());
+			unmarshaller.unmarshal(new StringReader(xml));
+			return true;
 		}
 		catch (JAXBException e) {
-			throw new RuntimeException(e);
+			log.warn("Validation failed for input XML", e);
+			return false;
 		}
 	}
 
-	public static <T> T deserialize(String xml, Class<T> clazz) {
-		return deserialize((Object) xml, clazz);
-	}
-
-	public static <T> T deserialize(File xml, Class<T> clazz) {
-		return deserialize((Object) xml, clazz);
-	}
-
-	public static <T> T deserialize(Reader xml, Class<T> clazz) {
-		return deserialize((Object) xml, clazz);
-	}
-
-	public static <T> T deserialize(Document xml, Class<T> clazz) {
-		return deserialize((Object) xml, clazz);
-	}
-
-	public static <T> T deserialize(Node xml, Class<T> clazz) {
-		return deserialize((Object) xml, clazz);
-	}
-
-	public static <T> T deserialize(Object xml, Class<T> clazz) {
-		Unmarshaller u = newUnmarshaller(clazz);
+	public static <T> boolean validate(InputStream is, Class<T> clazz) {
 		try {
-            if (xml instanceof Reader) {
-                return (T) u.unmarshal((Reader) xml);
-            } else if (xml instanceof File) {
-                return (T) u.unmarshal((File) xml);
-            } else if (xml instanceof Node) {
-                return u.unmarshal((Node) xml, clazz).getValue();
-            } else {
-                return (T) u.unmarshal(new StringReader(xml.toString()));
+			JAXBContext jc = JAXBContext.newInstance(clazz);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			unmarshaller.setSchema(getSchema(clazz));
+			unmarshaller.setEventHandler(new XmlValidationHandler());
+			unmarshaller.unmarshal(is);
+			return true;
+		}
+		catch (JAXBException e) {
+			log.warn("Validation failed for input XML", e);
+			return false;
+		}
+	}
+	
+	private static Schema getSchema(Class<?> clazz) {
+        try {
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            StringSchemaOutputResolver ssor = new StringSchemaOutputResolver();
+            JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
+            jaxbContext.generateSchema(ssor);
+            String schemaString = ssor.getSchemaString();
+            if (schemaString != null && !schemaString.isEmpty()) {
+                InputStream schemaStream = new ByteArrayInputStream(schemaString.getBytes(StandardCharsets.UTF_8));
+                return sf.newSchema(new StreamSource(schemaStream));
             }
-		}
-		catch (JAXBException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public static <T> List<T> deserializeCollection(Collection<File> files, Class<T> clazz) {
-		Unmarshaller u = newUnmarshaller(clazz);
-		List<T> objects = new ArrayList<>();
-		for (File file : files) {
-			try {
-				objects.add((T) u.unmarshal(file));
-			} catch (Exception e) {
-				throw new RuntimeException("Failed to unmarshal class " + clazz.getName() + " from file:\n" + file, e);
-			}
-		}
-		return objects;
-	}
-
-	public static Unmarshaller newUnmarshaller(Class<?> clazz) { 
-		Future<JAXBContext> contextTask = CONTEXTS.remove(clazz);
-		try {
-			JAXBContext jc = contextTask == null ? JAXBContext.newInstance(clazz) : contextTask.get();
-			Unmarshaller u = jc.createUnmarshaller();
-			u.setEventHandler(new XmlValidationHandler());
-			return u;
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e instanceof ExecutionException ? e.getCause() : e);
-		} catch (JAXBException e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			try (PrintStream ps = new PrintStream(os)) {
-				e.printStackTrace(ps); 
-				throw new RuntimeException("Failed to initialize unmarshaller for class " + clazz.getName() + "\n" + os);
-			}
-		}
-	}
-
-	public static Unmarshaller newUnmarshaller(Class<?> clazz, Schema schema) {
-		Future<JAXBContext> contextTask = CONTEXTS.remove(clazz);
-		try {
-			JAXBContext jc = contextTask == null ? JAXBContext.newInstance(clazz) : contextTask.get();
-			Unmarshaller u = jc.createUnmarshaller();
-			u.setEventHandler(new XmlValidationHandler());
-			u.setSchema(schema);
-			return u;
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e instanceof ExecutionException ? e.getCause() : e);
-		} catch (JAXBException e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			try (PrintStream ps = new PrintStream(os)) {
-				e.printStackTrace(ps); 
-				throw new RuntimeException("Failed to initialize unmarshaller for class " + clazz.getName() + "\n" + os);
-			}
-		}
-	}
-
-
-	public static String generateSchema(Class<?>... classes) {
-		try {
-			JAXBContext jc = JAXBContext.newInstance(classes);
-			StringSchemaOutputResolver ssor = new StringSchemaOutputResolver();
-			jc.generateSchema(ssor);
-			return ssor.getSchemaString();
-		}
-		catch (IOException | JAXBException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        } catch (JAXBException | SAXException | IOException e) {
+            log.error("Error getting schema for class: " + clazz.getName(), e);
+        }
+        return null;
+    }
+	
+	public static boolean validateSchema(String xmlString, URL schemaUrl) {
+        try {
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(schemaUrl);
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8))));
+            return true;
+        } catch (SAXException | java.io.IOException e) {
+            log.warn("Schema validation failed: " + e.getMessage());
+            return false;
+        }
+    }
 }

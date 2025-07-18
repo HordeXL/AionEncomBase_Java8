@@ -1,158 +1,158 @@
 package com.aionemu.gameserver.network.aion.gmhandler;
 
+import com.aionemu.gameserver.configs.administration.AdminConfig;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.utils.PacketSendUtility;
-import com.aionemu.gameserver.utils.xml.JAXBUtil; 
-import com.aionemu.gameserver.dataholders.DataManager; 
+import com.aionemu.gameserver.utils.xml.JAXBUtil;
+import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 
 import java.io.File;
 import java.util.List;
+import java.util.Collection;
+import com.aionemu.gameserver.world.World;
 
-import javax.xml.bind.Unmarshaller;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Comando GM para adicionar uma skill combinada a um jogador.
+ * GM command to add a combined skill to a player.
  *
- * @author ginho1 (lógica original)
- * @author Dezalmado (adaptação para CmdGMHandler e correções de compilação)
+ * @author ginho1 (original logic)
+ * new adaptation for CmdGMHandler made by Dezalmado
  */
 public final class CmdCombineSkill extends AbstractGMHandler {
-
 
 	private static final File SKILLS_XML_FILE = new File("./data/scripts/system/handlers/consolecommands/data/skills.xml");
 
 	public CmdCombineSkill(Player admin, String params) {
 		super(admin, params);
-		run(); 
+		run();
 	}
 
 	public void run() {
-
-		String[] splitParams = params.split(" ");
-
-		if (splitParams.length < 1) { 
-			PacketSendUtility.sendMessage(admin, "Syntax: //combineskill <skill_name> [skill_level]");
+		if (admin.getAccessLevel() < AdminConfig.GM_LEVEL) {
+			PacketSendUtility.sendMessage(admin, "You do not have sufficient access level to use this command.");
 			return;
 		}
 
-		final VisibleObject target = admin.getTarget();
-		if (target == null) {
-			PacketSendUtility.sendMessage(admin, "No target selected.");
+		String[] commandArgs = params.split(" ");
+		if (commandArgs.length < 1 || commandArgs[0].isEmpty()) {
+			PacketSendUtility.sendMessage(admin, "Syntax: //combineskill <skill_id_or_name> [skill_level] [player_name]");
 			return;
 		}
 
-		if (!(target instanceof Player)) {
-			PacketSendUtility.sendMessage(admin, "This command can only be used on a player!");
-			return;
-		}
+		String skillNameOrId = commandArgs[0];
+		int skillLvl = 1;
+		Player player = target;
 
-		final Player player = (Player) target;
-
-		String skillName = splitParams[0];
-		int skillLvl = 1; 
-
-		if (splitParams.length > 1) { 
+		if (commandArgs.length >= 2) {
 			try {
-				skillLvl = Integer.parseInt(splitParams[1]);
+				skillLvl = Integer.parseInt(commandArgs[1]);
 			} catch (NumberFormatException e) {
-				PacketSendUtility.sendMessage(admin, "Skill level must be an integer.");
+				PacketSendUtility.sendMessage(admin, "Error: Invalid skill level. Use a number.");
 				return;
 			}
 		}
 
-		SkillsXmlData data = null; 
+		if (commandArgs.length >= 3) {
+			String playerName = commandArgs[2];
+			player = null;
+			Collection<Player> allPlayers = World.getInstance().getAllPlayers();
+			for (Player p : allPlayers) {
+				if (p.getName().equalsIgnoreCase(playerName)) {
+					player = p;
+					break;
+				}
+			}
+		}
+
+		if (player == null) {
+			PacketSendUtility.sendMessage(admin, "Error: Target player not found. Specify a player name or select a target.");
+			return;
+		}
+
+		SkillsXmlData data;
 		try {
-		    data = JAXBUtil.deserialize(SKILLS_XML_FILE, SkillsXmlData.class); 
+			data = JAXBUtil.unmarshal(SKILLS_XML_FILE, SkillsXmlData.class);
 		} catch (Exception e) {
-		    PacketSendUtility.sendMessage(admin, "Error loading skills data: " + e.getMessage());
-		    e.printStackTrace(); 
-		    return;
+			PacketSendUtility.sendMessage(admin, "Error loading skill data from XML: " + e.getMessage());
+			return;
 		}
 
-		if (data == null) {
-		    PacketSendUtility.sendMessage(admin, "Could not load skills data from XML.");
-		    return;
+		XmlSkillTemplate skillTemplate = data.getSkillTemplate(skillNameOrId);
+		if (skillTemplate == null) {
+			PacketSendUtility.sendMessage(admin, "Error: Skill '" + skillNameOrId + "' not found in skills.xml file.");
+			return;
 		}
 
-		XmlSkillTemplate xmlSkillTemplate = data.getSkillTemplate(skillName); 
-        int skillId = 0;
-		if (xmlSkillTemplate != null) {
-			skillId = xmlSkillTemplate.getTemplateId();
-		} else {
-            PacketSendUtility.sendMessage(admin, "Skill '" + skillName + "' not found in XML data.");
-            return;
-        }
+		int skillId = skillTemplate.getTemplateId();
 
 		if (skillId > 0) {
-            SkillTemplate actualGameSkillTemplate = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-            if(actualGameSkillTemplate != null) {
-                player.getSkillList().addSkill(player, skillId, skillLvl); 
-                PacketSendUtility.sendMessage(admin, "Skill '" + skillName + "' (ID: " + skillId + ", Level: " + skillLvl + ") successfully added to " + player.getName() + "!");
-            } else {
-                PacketSendUtility.sendMessage(admin, "Error: Skill ID " + skillId + " exists in XML but not in game's DataManager. Cannot add skill.");
-            }
-		} else {
-			PacketSendUtility.sendMessage(admin, "Error: Skill ID could not be determined for '" + skillName + "'.");
+
+			SkillTemplate actualSkillTemplate = DataManager.SKILL_DATA.getSkillTemplate(skillId);
+			if (actualSkillTemplate != null) {
+				player.getSkillList().addSkill(player, skillId, skillLvl);
+				PacketSendUtility.sendMessage(admin, "Skill '" + skillTemplate.getName() + "' (ID: " + skillId + ", Level: " + skillLvl + ") successfully added to " + player.getName() + "!");
+				if (!player.equals(admin)) {
+					PacketSendUtility.sendMessage(player, "Admin " + admin.getName() + " added skill " + skillTemplate.getName() + " to you.");
+				}
+			} else {
+				PacketSendUtility.sendMessage(admin, "Error: Skill ID " + skillId + " exists in XML but not in game's DataManager. Cannot add skill.");
+			}
 		}
 	}
 
 	@XmlAccessorType(XmlAccessType.NONE)
-	@XmlType(namespace = "", name = "XmlSkillTemplate") 
-	private static class XmlSkillTemplate { 
-
+	@XmlType(namespace = "", name = "XmlSkillTemplate")
+	private static class XmlSkillTemplate {
 		@XmlAttribute(name = "id", required = true)
-		@XmlID
-		private String id;
+		private int skillId;
 
 		@XmlAttribute(name = "name")
 		private String name;
-
-		private int skillId; 
 
 		public String getName() {
 			return name;
 		}
 
-		public int getTemplateId() { 
+		public int getTemplateId() {
 			return skillId;
-		}
-
-		public void setSkillId(int skillId) {
-			this.skillId = skillId;
-		}
-
-		@SuppressWarnings("unused")
-		void afterUnmarshal(Unmarshaller u, Object parent) {
-			setSkillId(Integer.parseInt(id));
 		}
 	}
 
 	@XmlRootElement(name = "skills")
 	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class SkillsXmlData { 
-
+	private static class SkillsXmlData {
 		@XmlElement(name = "skill")
-		private List<XmlSkillTemplate> its; 
+		private List<XmlSkillTemplate> its;
 
-		public XmlSkillTemplate getSkillTemplate(String skill) { 
-			for (XmlSkillTemplate it : getData()) { 
-				if (it.getName().toLowerCase().equals(skill.toLowerCase()))
-					return it;
+		public XmlSkillTemplate getSkillTemplate(String skillNameOrId) {
+			try {
+				int id = Integer.parseInt(skillNameOrId);
+				for (XmlSkillTemplate skill : its) {
+					if (skill.getTemplateId() == id) {
+						return skill;
+					}
+				}
+			} catch (NumberFormatException e) {
+
+			}
+
+
+			for (XmlSkillTemplate skill : its) {
+				if (skill.getName().equalsIgnoreCase(skillNameOrId)) {
+					return skill;
+				}
 			}
 			return null;
-		}
-
-		protected List<XmlSkillTemplate> getData() { 
-			return its;
 		}
 	}
 }
