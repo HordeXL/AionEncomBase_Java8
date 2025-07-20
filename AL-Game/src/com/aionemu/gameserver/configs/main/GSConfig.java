@@ -1,19 +1,3 @@
-/*
-
- *
- *  Encom is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Encom is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser Public License
- *  along with Encom.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.aionemu.gameserver.configs.main;
 
 import java.util.Calendar;
@@ -27,11 +11,13 @@ public class GSConfig {
 	public static String SERVER_NAME;
 	@Property(key = "gameserver.players.max.level", defaultValue = "83")
 	public static int PLAYER_MAX_LEVEL;
+	@Property(key = "gameserver.starting.level", defaultValue = "1")
+    public static int STARTING_LEVEL;
 	@Property(key = "gameserver.lang", defaultValue = "en")
 	public static String LANG;
 	@Property(key = "gameserver.timezone", defaultValue = "")
 	public static String TIME_ZONE_ID = Calendar.getInstance().getTimeZone().getID();
-	@Property(key = "gameserver.chatserver.enable", defaultValue = "false")
+	@Property(key = "gameserver.chatserver.enable", defaultValue = "true")
 	public static boolean ENABLE_CHAT_SERVER;
 	@Property(key = "gameserver.revisiondisplay.enable", defaultValue = "false")
 	public static boolean SERVER_MOTD_DISPLAYREV;
@@ -64,9 +50,7 @@ public class GSConfig {
 	/**
  	 * Memory Optimization Configs
  	 */
- 	@Property(key = "gameserver.gc.enable", defaultValue = "true")
- 	public static boolean ENABLE_MEMORY_GC;
- 	@Property(key = "gameserver.gc.optimization.time", defaultValue = "5")
- 	public static int GC_OPTIMIZATION_TIME;
-
+ 	public static final boolean ENABLE_MEMORY_GC = true; 
+ 	public static final int GC_OPTIMIZATION_TIME = 60; 
+ 	public static final int MEMORY_THRESHOLD_PERCENT = 80;
 }

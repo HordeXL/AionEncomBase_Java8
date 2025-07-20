@@ -1,19 +1,3 @@
-/*
-
- *
- *  Encom is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Encom is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser Public License
- *  along with Encom.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.aionemu.gameserver.model;
 
 import javax.xml.bind.annotation.XmlEnum;
@@ -22,25 +6,52 @@ import com.aionemu.gameserver.model.gameobjects.player.Player;
 
 @XmlEnum
 public enum PlayerClass {
-	WARRIOR(0, true), GLADIATOR(1), TEMPLAR(2), SCOUT(3, true), ASSASSIN(4), RANGER(5), MAGE(6, true), SORCERER(7),
-	SPIRIT_MASTER(8), PRIEST(9, true), CLERIC(10), CHANTER(11),
+	WARRIOR(0, true),
+    GLADIATOR(1, false),
+    TEMPLAR(2, false),
+    SCOUT(3, true),
+    ASSASSIN(4, false),
+    RANGER(5, false),
+    MAGE(6, true),
+    SORCERER(7, false),
+    SPIRIT_MASTER(8, false),
+    PRIEST(9, true),
+    CLERIC(10, false),
+    CHANTER(11, false),
 
 	// News Class 4.3/4.5
-	TECHNIST(12, true), AETHERTECH(13), GUNSLINGER(14), MUSE(15, true), SONGWEAVER(16), ALL(17);
+	TECHNIST(12, true),
+    AETHERTECH(13, false),
+    GUNSLINGER(14, false),
+    MUSE(15, true),
+    SONGWEAVER(16, false),
+    ALL(17);
 
 	private byte classId;
 	private int idMask;
 	private boolean startingClass;
+    private String rusname;
 
 	private PlayerClass(int classId) {
 		this(classId, false);
 	}
+
+    PlayerClass(int classId, String rusname) {
+        this(classId, false, rusname);
+    }
 
 	private PlayerClass(int classId, boolean startingClass) {
 		this.classId = (byte) classId;
 		this.startingClass = startingClass;
 		this.idMask = (int) Math.pow(2, classId);
 	}
+
+    PlayerClass(int classId, boolean startingClass, String rusname) {
+        this.classId = (byte) classId;
+        this.startingClass = startingClass;
+        this.idMask = (int) Math.pow(2, classId);
+        this.rusname = rusname;
+    }
 
 	public byte getClassId() {
 		return classId;
@@ -104,27 +115,41 @@ public enum PlayerClass {
 		return idMask;
 	}
 
-	public String getClassType(Player player) {
-		String type = null;
-		switch (player.getPlayerClass()) {
-		case TEMPLAR:
-		case ASSASSIN:
-		case RANGER:
-		case GLADIATOR:
-		case GUNSLINGER:
-			type = "PHYSICAL";
-			break;
-		case SORCERER:
-		case CHANTER:
-		case CLERIC:
-		case SPIRIT_MASTER:
-		case SONGWEAVER:
-		case AETHERTECH:
-			type = "MAGICAL";
-			break;
-		default:
-			break;
-		}
-		return type;
-	}
+    /**
+    * Reintroduced for compatibility.
+    * Returns the class type (PHYSICAL or MAGIC) based on the player's class.
+    * May require more detailed logic depending on the original usage.
+    */
+    public String getClassType(Player player) {
+        String type = null;
+        switch (player.getPlayerClass()) {
+            case TEMPLAR:
+            case ASSASSIN:
+            case RANGER:
+            case GLADIATOR:
+            case GUNSLINGER:
+                type = "PHYSICAL";
+                break;
+            case SORCERER:
+            case CHANTER:
+            case CLERIC:
+            case SPIRIT_MASTER:
+            case SONGWEAVER:
+            case AETHERTECH:
+                type = "MAGICAL";
+                break;
+            default:
+             /**
+             If the class is not recognized, you may want to return a default value,
+             throw an exception, or return null, depending on the desired behavior.
+             For now, return null.
+             */
+                break;
+        }
+        return type;
+    }
+
+    public String getEnumName() {
+        return rusname;
+    }
 }

@@ -1,29 +1,13 @@
-/*
-
- *
- *  Encom is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Encom is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser Public License
- *  along with Encom.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import com.aionemu.gameserver.model.account.PlayerAccountData;
+import com.aionemu.gameserver.network.PacketLoggerService;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.PlayerInfo;
 
 /**
  * This packet is response for CM_CREATE_CHARACTER
- * 
- * @author Nemesiss, AEJTester
+ * * @author Nemesiss, AEJTester
  */
 public class SM_CREATE_CHARACTER extends PlayerInfo {
 
@@ -45,7 +29,7 @@ public class SM_CREATE_CHARACTER extends PlayerInfo {
 	public static final int RESPONSE_NAME_RESERVED = 11;
 	/** You cannot create characters of other races in the same server */
 	public static final int RESPONSE_OTHER_RACE = 12;
-	public static final int RESPONSE_CREATE_NEW = 22;
+	public static final int RESPONSE_CREATE_CHAR = 22;
 
 	/**
 	 * response code
@@ -59,10 +43,9 @@ public class SM_CREATE_CHARACTER extends PlayerInfo {
 
 	/**
 	 * Constructs new <tt>SM_CREATE_CHARACTER </tt> packet
-	 * 
-	 * @param accPlData    playerAccountData of player that was created
+	 * * @param accPlData    playerAccountData of player that was created
 	 * @param responseCode response code (invalid nickname, nickname is already
-	 *                     taken, ok)
+	 * taken, ok)
 	 */
 
 	public SM_CREATE_CHARACTER(PlayerAccountData accPlData, int responseCode) {
@@ -75,15 +58,14 @@ public class SM_CREATE_CHARACTER extends PlayerInfo {
 	 */
 	@Override
 	protected void writeImpl(AionConnection con) {
+		PacketLoggerService.getInstance().logPacketSM(this.getPacketName());
 		writeD(responseCode);
 
 		if (responseCode == RESPONSE_OK) {
-			writePlayerInfo(player); // if everything is fine, all the character's data should be sent
-			writeB(new byte[32]);
-			writeB(new byte[88]); // unk 4.5.0.19
+			writePlayerInfo(player);
+			writeB(new byte[268]);
 		} else {
-			writeB(new byte[448 + /* 4.5.0.19 unk */88]); // if something is wrong, only return code should be sent in
-															// the packet
+			writeB(new byte[756]);
 		}
 	}
 }
