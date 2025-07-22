@@ -1,3 +1,19 @@
+/**
+ * This file is part of Encom.
+ *
+ *  Encom is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Encom is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser Public License
+ *  along with Encom.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.aionemu.gameserver.network.aion.gmhandler;
 
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
@@ -22,7 +38,7 @@ abstract public class AbstractGMHandler {
 	public void getTarget() {
 		VisibleObject t = admin.getTarget();
 		if (t instanceof Player) {
-			target = (Player) t;
+			target = (Player) target;
 			return;
 		}
 		target = null;
@@ -32,8 +48,7 @@ abstract public class AbstractGMHandler {
 		if (target != null) {
 			return true;
 		}
-
-		PacketSendUtility.sendMessage(admin, "Target not found or target is not a player.");
+		PacketSendUtility.sendMessage(admin, "Target not found or target is not an player");
 		return false;
 	}
 }
