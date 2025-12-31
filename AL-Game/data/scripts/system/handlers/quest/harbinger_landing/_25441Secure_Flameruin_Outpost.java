@@ -33,11 +33,11 @@ public class _25441Secure_Flameruin_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805419).addOnQuestStart(questId);
         qe.registerQuestNpc(805419).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883023).addOnKillEvent(questId);
-		qe.registerQuestNpc(883024).addOnKillEvent(questId);
-		qe.registerQuestNpc(883025).addOnKillEvent(questId);
-		qe.registerQuestNpc(883026).addOnKillEvent(questId);
-		qe.registerQuestNpc(883027).addOnKillEvent(questId);
+		qe.registerQuestNpc(883460).addOnKillEvent(questId);
+		qe.registerQuestNpc(883461).addOnKillEvent(questId);
+		qe.registerQuestNpc(883462).addOnKillEvent(questId);
+		qe.registerQuestNpc(883463).addOnKillEvent(questId);
+		qe.registerQuestNpc(883464).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25441Secure_Flameruin_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883023:
-				case 883024:
-				case 883025:
-				case 883026:
-				case 883027:
+                case 883460:
+				case 883461:
+				case 883462:
+				case 883463:
+				case 883464:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

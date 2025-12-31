@@ -34,11 +34,11 @@ public class _15440Shield_Sootguzzle_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805395).addOnQuestStart(questId);
         qe.registerQuestNpc(805395).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883017).addOnKillEvent(questId);
-		qe.registerQuestNpc(883018).addOnKillEvent(questId);
-		qe.registerQuestNpc(883019).addOnKillEvent(questId);
-		qe.registerQuestNpc(883020).addOnKillEvent(questId);
-		qe.registerQuestNpc(883021).addOnKillEvent(questId);
+		qe.registerQuestNpc(883441).addOnKillEvent(questId);
+		qe.registerQuestNpc(883442).addOnKillEvent(questId);
+		qe.registerQuestNpc(883443).addOnKillEvent(questId);
+		qe.registerQuestNpc(883444).addOnKillEvent(questId);
+		qe.registerQuestNpc(883445).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15440Shield_Sootguzzle_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883017:
-				case 883018:
-				case 883019:
-				case 883020:
-				case 883021:
+                case 883441:
+				case 883442:
+				case 883443:
+				case 883444:
+				case 883445:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

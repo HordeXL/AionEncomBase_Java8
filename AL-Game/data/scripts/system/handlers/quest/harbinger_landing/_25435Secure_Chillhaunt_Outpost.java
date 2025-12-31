@@ -33,11 +33,11 @@ public class _25435Secure_Chillhaunt_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805413).addOnQuestStart(questId);
         qe.registerQuestNpc(805413).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883011).addOnKillEvent(questId);
-		qe.registerQuestNpc(883012).addOnKillEvent(questId);
-		qe.registerQuestNpc(883013).addOnKillEvent(questId);
-		qe.registerQuestNpc(883014).addOnKillEvent(questId);
-		qe.registerQuestNpc(883015).addOnKillEvent(questId);
+		qe.registerQuestNpc(883422).addOnKillEvent(questId);
+		qe.registerQuestNpc(883423).addOnKillEvent(questId);
+		qe.registerQuestNpc(883424).addOnKillEvent(questId);
+		qe.registerQuestNpc(883425).addOnKillEvent(questId);
+		qe.registerQuestNpc(883426).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25435Secure_Chillhaunt_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883011:
-				case 883012:
-				case 883013:
-				case 883014:
-				case 883015:
+                case 883422:
+				case 883423:
+				case 883424:
+				case 883425:
+				case 883426:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

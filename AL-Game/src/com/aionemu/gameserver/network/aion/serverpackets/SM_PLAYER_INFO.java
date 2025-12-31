@@ -352,23 +352,17 @@ public class SM_PLAYER_INFO extends AionServerPacket {
 		writeD(player.getHouseOwnerId());
 
 		/**
-		 * System By Ranastic. Remade DainAvenger
+		 * System By Ranastic
 		 */
-	    writeD(player.getPlayersBonusId());
-        // writeD(10); // Player Buff.
-        if (MembershipConfig.PREMIUM_TAG_DISPLAY_ENABLE) {
-            if (player.getMembership() == 1) {
-		        writeD(10); // Player Buff.
-		        writeC(6); // Vip Rank Icon.
-            } 
-            if (player.getMembership() == 2) {
-		        writeD(10); // Player Buff.
-		        writeD(0); // New Buff Icons.
-            }
-        }
+		writeD(player.getPlayersBonusId());
+		writeD(10); // Player Buff.
+		writeD(0); // New Buff Icons.
+
 		writeC(raceId == 0 ? 3 : 5); // Language: Asmodians 3/Elyos 5
 		writeC(player.getConquerorInfo().getRank()); // Conqueror 4.8
 		writeC(player.getProtectorInfo().getRank()); // Protector 4.8
+		writeC(6); // Vip Rank Icon.
+		writeD(1); // unk 5.5
         writeD(1); // unk 5.5
 	}
 }

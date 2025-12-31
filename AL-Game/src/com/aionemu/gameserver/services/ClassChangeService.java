@@ -175,7 +175,6 @@ public class ClassChangeService {
 					player.getController().upgradePlayer();
 				} 
 			}
-            SkillLearnService.addMissingSkills(player);
 		}
 	}
 

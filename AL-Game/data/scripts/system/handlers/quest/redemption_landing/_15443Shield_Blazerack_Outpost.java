@@ -34,11 +34,11 @@ public class _15443Shield_Blazerack_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805398).addOnQuestStart(questId);
         qe.registerQuestNpc(805398).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883035).addOnKillEvent(questId);
-		qe.registerQuestNpc(883036).addOnKillEvent(questId);
-		qe.registerQuestNpc(883037).addOnKillEvent(questId);
-		qe.registerQuestNpc(883038).addOnKillEvent(questId);
-		qe.registerQuestNpc(883039).addOnKillEvent(questId);
+		qe.registerQuestNpc(883498).addOnKillEvent(questId);
+		qe.registerQuestNpc(883499).addOnKillEvent(questId);
+		qe.registerQuestNpc(883500).addOnKillEvent(questId);
+		qe.registerQuestNpc(883501).addOnKillEvent(questId);
+		qe.registerQuestNpc(883502).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15443Shield_Blazerack_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883035:
-				case 883036:
-				case 883037:
-				case 883038:
-				case 883039:
+                case 883498:
+				case 883499:
+				case 883500:
+				case 883501:
+				case 883502:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

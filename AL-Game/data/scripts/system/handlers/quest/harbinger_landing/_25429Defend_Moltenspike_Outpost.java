@@ -33,11 +33,11 @@ public class _25429Defend_Moltenspike_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805423).addOnQuestStart(questId);
         qe.registerQuestNpc(805423).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883209).addOnKillEvent(questId);
-		qe.registerQuestNpc(883210).addOnKillEvent(questId);
-		qe.registerQuestNpc(883211).addOnKillEvent(questId);
-		qe.registerQuestNpc(883212).addOnKillEvent(questId);
-		qe.registerQuestNpc(883213).addOnKillEvent(questId);
+		qe.registerQuestNpc(883542).addOnKillEvent(questId);
+		qe.registerQuestNpc(883543).addOnKillEvent(questId);
+		qe.registerQuestNpc(883544).addOnKillEvent(questId);
+		qe.registerQuestNpc(883545).addOnKillEvent(questId);
+		qe.registerQuestNpc(883546).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25429Defend_Moltenspike_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883209:
-				case 883210:
-				case 883211:
-				case 883212:
-				case 883213:
+                case 883542:
+				case 883543:
+				case 883544:
+				case 883545:
+				case 883546:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

@@ -23,10 +23,9 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 /** Author Ghostfur & Unknown (Aion-Unique)
 /****/
 
-public class _3732General_Mania extends QuestHandler
-{
+public class _3732General_Mania extends QuestHandler {
+
 	private static final int questId = 3732;
-	
 	public _3732General_Mania() {
 		super(questId);
 	}
@@ -47,9 +46,12 @@ public class _3732General_Mania extends QuestHandler
 		int targetId = env.getTargetId();
 		if (qs == null || qs.getStatus() == QuestStatus.NONE) {
 			if (targetId == 800518) { //Brunto.
-				if (dialog == QuestDialog.START_DIALOG) {
+				if (env.getDialog() == QuestDialog.START_DIALOG)
 					return sendQuestDialog(env, 4762);
-				} else {
+				else if (env.getDialog() == QuestDialog.ASK_ACCEPTION) {
+                    return sendQuestDialog(env, 4);
+                }
+				else if (env.getDialog() == QuestDialog.ACCEPT_QUEST) {
 					return sendQuestStartDialog(env, 182202179, 1);
 				}
 			}

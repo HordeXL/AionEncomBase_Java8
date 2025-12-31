@@ -20,15 +20,12 @@ import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
 import com.aionemu.gameserver.questEngine.handlers.HandlerResult;
 import com.aionemu.gameserver.questEngine.handlers.QuestHandler;
 import com.aionemu.gameserver.questEngine.model.QuestDialog;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.questEngine.model.QuestState;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
-import com.aionemu.gameserver.services.QuestService;
-import com.aionemu.gameserver.utils.PacketSendUtility;
 
 /**
  * @author Rhys2002
@@ -59,7 +56,7 @@ public class _1114TheNymphsGown extends QuestHandler {
 			if (targetId == 0) { 
 				if (env.getDialog() == QuestDialog.ACCEPT_QUEST) {
 					giveQuestItem(env, 182200226, 1);
-/* 					removeQuestItem(env, 182200214, 1); // Namus's Diary with double-click to start the quest */
+					removeQuestItem(env, 182200214, 1); // Namus's Diary with double-click to start the quest
 					return sendQuestStartDialog(env);
 				}
 				if (env.getDialog() == QuestDialog.REFUSE_QUEST) {
@@ -80,7 +77,10 @@ public class _1114TheNymphsGown extends QuestHandler {
 					return sendQuestEndDialog(env);
 			}
 			else if (targetId == 203058 && var == 3) // Asteros
-				return sendQuestEndDialog(env);
+				if (env.getDialog() == QuestDialog.USE_OBJECT)
+					return sendQuestDialog(env, 5);
+				else
+					return sendQuestEndDialog(env);
 		}
 		else if (qs.getStatus() != QuestStatus.START)
 			return false;
@@ -134,9 +134,7 @@ public class _1114TheNymphsGown extends QuestHandler {
 								continue;
 							((Npc) obj).getAggroList().addDamage(player, 50);
 						}
-						// Nymph's Dress
-						if (!giveQuestItem(env, 182200217, 1))
-							; // wtf ?
+						giveQuestItem(env, 182200217, 1); // Nymph's Dress
 						qs.setQuestVarById(0, 2);
 						updateQuestStatus(env);
 					}
@@ -157,8 +155,7 @@ public class _1114TheNymphsGown extends QuestHandler {
 					}
 				case STEP_TO_2:
 					if (var == 3) {
-						PacketSendUtility.sendPacket(player, new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-						return true;
+					    return closeDialogWindow(env);
 					}
 			}
 		}

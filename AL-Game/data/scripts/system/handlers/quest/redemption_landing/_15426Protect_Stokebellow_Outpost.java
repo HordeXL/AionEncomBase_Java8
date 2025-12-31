@@ -34,11 +34,11 @@ public class _15426Protect_Stokebellow_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805397).addOnQuestStart(questId);
         qe.registerQuestNpc(805397).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883179).addOnKillEvent(questId);
-		qe.registerQuestNpc(883180).addOnKillEvent(questId);
-		qe.registerQuestNpc(883181).addOnKillEvent(questId);
-		qe.registerQuestNpc(883182).addOnKillEvent(questId);
-		qe.registerQuestNpc(883183).addOnKillEvent(questId);
+		qe.registerQuestNpc(883491).addOnKillEvent(questId);
+		qe.registerQuestNpc(883492).addOnKillEvent(questId);
+		qe.registerQuestNpc(883493).addOnKillEvent(questId);
+		qe.registerQuestNpc(883494).addOnKillEvent(questId);
+		qe.registerQuestNpc(883495).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15426Protect_Stokebellow_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883179:
-				case 883180:
-				case 883181:
-				case 883182:
-				case 883183:
+                case 883491:
+				case 883492:
+				case 883493:
+				case 883494:
+				case 883495:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

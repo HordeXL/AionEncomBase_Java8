@@ -190,8 +190,24 @@ public class CmdTeleportTo extends AbstractGMHandler {
         // 5.0 Maps
         else if (destination.equalsIgnoreCase("Iluma") || destination.equalsIgnoreCase("Esterra"))
             goTo(admin, 210100000, 1624, 1377, 310);
+		else if (destination.equalsIgnoreCase("Ariels Rest") || destination.equalsIgnoreCase("arielsrest"))
+            goTo(admin, 210100000, 1360, 371, 350);
+		else if (destination.equalsIgnoreCase("Zephyr Vale") || destination.equalsIgnoreCase("zephyrvale"))
+            goTo(admin, 210100000, 829, 1842, 310);
+		else if (destination.equalsIgnoreCase("Polten Marsh") || destination.equalsIgnoreCase("poltenmarsh"))
+            goTo(admin, 210100000, 2438, 1298, 227);
+		else if (destination.equalsIgnoreCase("Kojol Valley") || destination.equalsIgnoreCase("kojolvalley"))
+            goTo(admin, 210100000, 1886, 2069, 343);
         else if (destination.equalsIgnoreCase("Norsvold") || destination.equalsIgnoreCase("Nosra"))
-            goTo(admin, 220110000, 1589, 2090, 186);
+            goTo(admin, 220110000, 1589, 2090, 187);
+		else if (destination.equalsIgnoreCase("Nightbloom Forest") || destination.equalsIgnoreCase("nightbloomforest"))
+            goTo(admin, 220110000, 1462, 966, 226);
+		else if (destination.equalsIgnoreCase("Aetherspring Lake") || destination.equalsIgnoreCase("aetherspringlake"))
+            goTo(admin, 220110000, 986, 1381, 285);
+		else if (destination.equalsIgnoreCase("Aetheric Gales") || destination.equalsIgnoreCase("aethericgales"))
+            goTo(admin, 220110000, 1109, 2608, 231);
+		else if (destination.equalsIgnoreCase("Canyon of Lost Souls") || destination.equalsIgnoreCase("canyonoflostsouls"))
+            goTo(admin, 220110000, 2210, 1870, 239);
         else if (destination.equalsIgnoreCase("Tower of Eternity Elyos") || destination.equalsIgnoreCase("TOEE"))
             goTo(admin, 210110000, 498, 500, 303);
         else if (destination.equalsIgnoreCase("Tower of Eternity Asmo") || destination.equalsIgnoreCase("TOEA"))
@@ -200,20 +216,25 @@ public class CmdTeleportTo extends AbstractGMHandler {
 		/**
 		 * Abyss
 		 */
-		else if (destination.equalsIgnoreCase("Reshanta"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 951, 936, 1667);
-		else if (destination.equalsIgnoreCase("Abyss 1"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 2867, 1034, 1528);
-		else if (destination.equalsIgnoreCase("Abyss 2"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 1078, 2839, 1636);
-		else if (destination.equalsIgnoreCase("Abyss 3"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 1596, 2952, 2943);
-		else if (destination.equalsIgnoreCase("Abyss 4"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 2054, 660, 2843);
-		else if (destination.equalsIgnoreCase("Eye of Reshanta") || destination.equalsIgnoreCase("Eye"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 1979, 2114, 2291);
-		else if (destination.equalsIgnoreCase("Divine Fortress") || destination.equalsIgnoreCase("Divine"))
-			goTo(admin, WorldMapType.RESHANTA.getId(), 2130, 1925, 2322);
+		else if (destination.equalsIgnoreCase("Siels Eastern Fortress") || destination.equalsIgnoreCase("sieleast"))
+            goTo(admin, 400010000, 1792, 2412, 1479);
+		else if (destination.equalsIgnoreCase("Siels Western Fortress") || destination.equalsIgnoreCase("sielwest"))
+            goTo(admin, 400010000, 2207, 2014, 1479);
+		else if (destination.equalsIgnoreCase("Sulfur Fortress") || destination.equalsIgnoreCase("Sulfur"))
+            goTo(admin, 400010000, 1043, 951, 1538);
+		else if (destination.equalsIgnoreCase("Krotan Fortress") || destination.equalsIgnoreCase("krotan"))
+            goTo(admin, 400010000, 1389, 994, 2960);
+		else if (destination.equalsIgnoreCase("Kysis Fortress") || destination.equalsIgnoreCase("kysis"))
+            goTo(admin, 400010000, 2052, 1731, 3006);
+		else if (destination.equalsIgnoreCase("Miren Fortress") || destination.equalsIgnoreCase("miren"))
+            goTo(admin, 400010000, 1222, 1784, 2943);
+		else if (destination.equalsIgnoreCase("Asteria Fortress") || destination.equalsIgnoreCase("asteria"))
+            goTo(admin, 400010000, 468, 2488, 2921);
+		else if (destination.equalsIgnoreCase("Roah Fortress") || destination.equalsIgnoreCase("roah"))
+            goTo(admin, 400010000, 2227, 456, 2894);
+		else if (destination.equalsIgnoreCase("Divine Fortress") || destination.equalsIgnoreCase("divine"))
+            goTo(admin, 400010000, 1580, 1759, 2316);
+		
 
 		/**
 		 * Instances
@@ -253,7 +274,7 @@ public class CmdTeleportTo extends AbstractGMHandler {
 		else if (destination.equalsIgnoreCase("Dark Poeta") || destination.equalsIgnoreCase("DP"))
 			goTo(admin, 300040000, 1214, 412, 140);
 		// Lower Abyss
-		else if (destination.equalsIgnoreCase("Sulfur") || destination.equalsIgnoreCase("Sulfur Tree Nest"))
+		else if (destination.equalsIgnoreCase("Sulfurtreenest") || destination.equalsIgnoreCase("Sulfur Tree Nest"))
 			goTo(admin, 300060000, 462, 345, 163);
 		else if (destination.equalsIgnoreCase("Right Wing") || destination.equalsIgnoreCase("Right Wing Chamber"))
 			goTo(admin, 300090000, 263, 386, 103);

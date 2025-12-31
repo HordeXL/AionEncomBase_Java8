@@ -333,9 +333,11 @@ public class ItemEquipmentListener {
 		if (itemStones == null || itemStones.size() == 0) {
 			return;
 		}
-		for (ManaStone stone : itemStones) {
-			addStoneStats(item, stone, cgs);
-		}
+        for (ManaStone stone : itemStones) {
+            if (stone != null) { // Добавляем проверку
+               addStoneStats(item, stone, cgs);
+            }
+        }
 	}
 
 	/**
@@ -346,6 +348,9 @@ public class ItemEquipmentListener {
 	 * @param cgs
 	 */
 	public static void addStoneStats(Item item, ManaStone stone, CreatureGameStats<?> cgs) {
+        if (stone == null) {
+           return;
+        }
 		List<StatFunction> modifiers = stone.getModifiers();
 		if (modifiers == null) {
 			return;
@@ -375,7 +380,6 @@ public class ItemEquipmentListener {
 		if (stone == null || item == null) {
 			return;
 		}
-
 		List<StatFunction> modifiers = stone.getModifiers();
 		if (modifiers == null) {
 			return;

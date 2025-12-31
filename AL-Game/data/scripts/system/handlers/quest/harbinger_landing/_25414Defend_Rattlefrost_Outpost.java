@@ -33,11 +33,11 @@ public class _25414Defend_Rattlefrost_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805408).addOnQuestStart(questId);
         qe.registerQuestNpc(805408).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883077).addOnKillEvent(questId);
-		qe.registerQuestNpc(883078).addOnKillEvent(questId);
-		qe.registerQuestNpc(883079).addOnKillEvent(questId);
-		qe.registerQuestNpc(883080).addOnKillEvent(questId);
-		qe.registerQuestNpc(883081).addOnKillEvent(questId);
+		qe.registerQuestNpc(883333).addOnKillEvent(questId);
+		qe.registerQuestNpc(883334).addOnKillEvent(questId);
+		qe.registerQuestNpc(883335).addOnKillEvent(questId);
+		qe.registerQuestNpc(883336).addOnKillEvent(questId);
+		qe.registerQuestNpc(883337).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25414Defend_Rattlefrost_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883077:
-				case 883078:
-				case 883079:
-				case 883080:
-				case 883081:
+                case 883333:
+				case 883334:
+				case 883335:
+				case 883336:
+				case 883337:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

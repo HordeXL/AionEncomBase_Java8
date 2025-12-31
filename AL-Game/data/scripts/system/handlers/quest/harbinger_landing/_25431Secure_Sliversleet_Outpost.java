@@ -23,22 +23,21 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 /** Author Ghostfur & Unknown (Aion-Unique)
 /****/
 
-public class _25445Secure_Moltenspike_Outpost extends QuestHandler {
+public class _25431Secure_Sliversleet_Outpost extends QuestHandler {
 
-    private final static int questId = 25445;
-	
-    public _25445Secure_Moltenspike_Outpost() {
+    private final static int questId = 25431;
+    public _25431Secure_Sliversleet_Outpost() {
         super(questId);
     }
 	
     public void register() {
-        qe.registerQuestNpc(805423).addOnQuestStart(questId);
-        qe.registerQuestNpc(805423).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883536).addOnKillEvent(questId);
-		qe.registerQuestNpc(883537).addOnKillEvent(questId);
-		qe.registerQuestNpc(883538).addOnKillEvent(questId);
-		qe.registerQuestNpc(883539).addOnKillEvent(questId);
-		qe.registerQuestNpc(883540).addOnKillEvent(questId);
+        qe.registerQuestNpc(805409).addOnQuestStart(questId);
+        qe.registerQuestNpc(805409).addOnTalkEvent(questId);
+		qe.registerQuestNpc(883346).addOnKillEvent(questId);
+		qe.registerQuestNpc(883347).addOnKillEvent(questId);
+		qe.registerQuestNpc(883348).addOnKillEvent(questId);
+		qe.registerQuestNpc(883349).addOnKillEvent(questId);
+		qe.registerQuestNpc(883350).addOnKillEvent(questId);
     }
 	
     @Override
@@ -47,7 +46,7 @@ public class _25445Secure_Moltenspike_Outpost extends QuestHandler {
         int targetId = env.getTargetId();
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs == null || qs.getStatus() == QuestStatus.NONE || qs.canRepeat()) {
-            if (targetId == 805423) {
+            if (targetId == 805409) {
                 if (env.getDialog() == QuestDialog.START_DIALOG) {
                     return sendQuestDialog(env, 4762);
                 } else {
@@ -55,8 +54,8 @@ public class _25445Secure_Moltenspike_Outpost extends QuestHandler {
                 }
             }
         }
-        else if (qs == null || qs.getStatus() == QuestStatus.REWARD) {
-			if (targetId == 805423) {
+        else if (qs.getStatus() == QuestStatus.REWARD) {
+			if (targetId == 805409) {
 				if (env.getDialogId() == 1352) {
 					return sendQuestDialog(env, 5);
 				} else {
@@ -72,11 +71,11 @@ public class _25445Secure_Moltenspike_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883536:
-				case 883537:
-				case 883538:
-				case 883539:
-				case 883540:
+                case 883346:
+				case 883347:
+				case 883348:
+				case 883349:
+				case 883350:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

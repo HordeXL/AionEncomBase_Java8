@@ -33,11 +33,11 @@ public class _25432Secure_Coldforge_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805410).addOnQuestStart(questId);
         qe.registerQuestNpc(805410).addOnTalkEvent(questId);
-		qe.registerQuestNpc(882993).addOnKillEvent(questId);
-		qe.registerQuestNpc(882994).addOnKillEvent(questId);
-		qe.registerQuestNpc(882995).addOnKillEvent(questId);
-		qe.registerQuestNpc(882996).addOnKillEvent(questId);
-		qe.registerQuestNpc(882997).addOnKillEvent(questId);
+		qe.registerQuestNpc(883365).addOnKillEvent(questId);
+		qe.registerQuestNpc(883366).addOnKillEvent(questId);
+		qe.registerQuestNpc(883367).addOnKillEvent(questId);
+		qe.registerQuestNpc(883368).addOnKillEvent(questId);
+		qe.registerQuestNpc(883369).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25432Secure_Coldforge_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 882993:
-				case 882994:
-				case 882995:
-				case 882996:
-				case 882997:
+                case 883365:
+				case 883366:
+				case 883367:
+				case 883368:
+				case 883369:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

@@ -35,8 +35,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
 @SuppressWarnings("rawtypes")
-public class SiegeCommand extends AdminCommand
-{
+public class SiegeCommand extends AdminCommand {
+
 	private static final String COMMAND_START = "start";
 	private static final String COMMAND_STOP = "stop";
 	private static final String COMMAND_LIST = "list";
@@ -264,11 +264,7 @@ public class SiegeCommand extends AdminCommand
 	}
 	
 	protected void showHelp(Player player) {
-		PacketSendUtility.sendMessage(player, "AdminCommand //siege Help\n"
-		+ "//siege start|stop <LocationId>\n"
-		+ "//siege list locations|sieges\n"
-		+ "//siege capture <LocationId> <siegeRaceName|legionName|legionId>\n"
-		+ "//siege assault <LocationId> <delaySec>");
+		PacketSendUtility.sendMessage(player, "AdminCommand //siegecommand Help\n" + "//siegecommand start|stop <LocationId>\n" + "//siegecommand list locations|sieges\n" + "//siegecommand capture <LocationId> <siegeRaceName|legionName|legionId>\n" + "//siegecommand assault <LocationId> <delaySec>");
 		java.util.Set<Integer> fortressIds = SiegeService.getInstance().getFortresses().keySet();
 		java.util.Set<Integer> artifactIds = SiegeService.getInstance().getStandaloneArtifacts().keySet();
 		PacketSendUtility.sendMessage(player, "Fortress: " + StringUtils.join(fortressIds, ", "));

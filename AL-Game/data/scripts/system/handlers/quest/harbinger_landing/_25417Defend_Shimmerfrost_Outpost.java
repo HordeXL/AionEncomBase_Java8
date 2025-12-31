@@ -33,11 +33,11 @@ public class _25417Defend_Shimmerfrost_Outpost extends QuestHandler {
     public void register() {
         qe.registerQuestNpc(805411).addOnQuestStart(questId);
         qe.registerQuestNpc(805411).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883113).addOnKillEvent(questId);
-		qe.registerQuestNpc(883114).addOnKillEvent(questId);
-		qe.registerQuestNpc(883115).addOnKillEvent(questId);
-		qe.registerQuestNpc(883116).addOnKillEvent(questId);
-		qe.registerQuestNpc(883117).addOnKillEvent(questId);
+		qe.registerQuestNpc(883390).addOnKillEvent(questId);
+		qe.registerQuestNpc(883391).addOnKillEvent(questId);
+		qe.registerQuestNpc(883392).addOnKillEvent(questId);
+		qe.registerQuestNpc(883393).addOnKillEvent(questId);
+		qe.registerQuestNpc(883394).addOnKillEvent(questId);
     }
 	
     @Override
@@ -71,11 +71,11 @@ public class _25417Defend_Shimmerfrost_Outpost extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883113:
-				case 883114:
-				case 883115:
-				case 883116:
-				case 883117:
+                case 883390:
+				case 883391:
+				case 883392:
+				case 883393:
+				case 883394:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

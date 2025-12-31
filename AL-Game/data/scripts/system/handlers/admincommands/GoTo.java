@@ -158,6 +158,27 @@ public class GoTo extends AdminCommand
 		else if (destination.equalsIgnoreCase("Hoarfrost"))
 			goTo(player, WorldMapType.BELUSLAN.getId(), 2431, 2063, 579);
 		
+		//Abyss & Reshanta Fortresses
+		else if (destination.equalsIgnoreCase("Siels Eastern Fortress") || destination.equalsIgnoreCase("sieleast"))
+            goTo(player, 400010000, 1792, 2412, 1479);
+		else if (destination.equalsIgnoreCase("Siels Western Fortress") || destination.equalsIgnoreCase("sielwest"))
+            goTo(player, 400010000, 2207, 2014, 1479);
+		else if (destination.equalsIgnoreCase("Sulfur Fortress") || destination.equalsIgnoreCase("Sulfur"))
+            goTo(player, 400010000, 1043, 951, 1538);
+		else if (destination.equalsIgnoreCase("Krotan Fortress") || destination.equalsIgnoreCase("krotan"))
+            goTo(player, 400010000, 1389, 994, 2960);
+		else if (destination.equalsIgnoreCase("Kysis Fortress") || destination.equalsIgnoreCase("kysis"))
+            goTo(player, 400010000, 2052, 1731, 3006);
+		else if (destination.equalsIgnoreCase("Miren Fortress") || destination.equalsIgnoreCase("miren"))
+            goTo(player, 400010000, 1222, 1784, 2943);
+		else if (destination.equalsIgnoreCase("Asteria Fortress") || destination.equalsIgnoreCase("asteria"))
+            goTo(player, 400010000, 468, 2488, 2921);
+		else if (destination.equalsIgnoreCase("Roah Fortress") || destination.equalsIgnoreCase("roah"))
+            goTo(player, 400010000, 2227, 456, 2894);
+		else if (destination.equalsIgnoreCase("Divine Fortress") || destination.equalsIgnoreCase("divine"))
+            goTo(player, 400010000, 1580, 1759, 2316);
+		
+		
 		else if (destination.equalsIgnoreCase("haramel") || destination.equalsIgnoreCase("Haramel"))
 			goTo(player, 300200000, 176, 21, 144);
 		else if (destination.equalsIgnoreCase("nochsana") || destination.equalsIgnoreCase("Nochsana Training Camp"))
@@ -519,6 +540,22 @@ public class GoTo extends AdminCommand
 			goTo(player, 220110000, 1807, 1986, 197);
 		else if (destination.equalsIgnoreCase("tower2")) //5.0
 			goTo(player, 220120000, 474, 499, 303);
+		else if (destination.equalsIgnoreCase("Ariels Rest") || destination.equalsIgnoreCase("arielsrest"))
+            goTo(player, 210100000, 1360, 371, 350);
+		else if (destination.equalsIgnoreCase("Zephyr Vale") || destination.equalsIgnoreCase("zephyrvale"))
+            goTo(player, 210100000, 829, 1842, 310);
+		else if (destination.equalsIgnoreCase("Polten Marsh") || destination.equalsIgnoreCase("poltenmarsh"))
+            goTo(player, 210100000, 2438, 1298, 227);
+		else if (destination.equalsIgnoreCase("Kojol Valley") || destination.equalsIgnoreCase("kojolvalley"))
+            goTo(player, 210100000, 1886, 2069, 343);
+		else if (destination.equalsIgnoreCase("Nightbloom Forest") || destination.equalsIgnoreCase("nightbloomforest"))
+            goTo(player, 220110000, 1462, 966, 226);
+		else if (destination.equalsIgnoreCase("Aetherspring Lake") || destination.equalsIgnoreCase("aetherspringlake"))
+            goTo(player, 220110000, 986, 1381, 285);
+		else if (destination.equalsIgnoreCase("Aetheric Gales") || destination.equalsIgnoreCase("aethericgales"))
+            goTo(player, 220110000, 1109, 2608, 231);
+		else if (destination.equalsIgnoreCase("Canyon of Lost Souls") || destination.equalsIgnoreCase("canyonoflostsouls"))
+            goTo(player, 220110000, 2210, 1870, 239);
 		//**5.3**//
 		else if (destination.equalsIgnoreCase("teminon")) //5.3
 			goTo(player, 400010000, 2309, 606, 1538);

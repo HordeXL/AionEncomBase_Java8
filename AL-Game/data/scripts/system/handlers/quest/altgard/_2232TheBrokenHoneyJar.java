@@ -70,9 +70,6 @@ public class _2232TheBrokenHoneyJar extends QuestHandler {
 					case CHECK_COLLECTED_ITEMS: {
 						return checkQuestItems(env, 1, 1, true, 5, 2716); // reward
 					}
-					case FINISH_DIALOG: {
-						return sendQuestSelectionDialog(env);
-					}
 				}
 			}
 			else if (targetId == 700061) { // Beehive

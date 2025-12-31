@@ -34,11 +34,11 @@ public class _15428Protect_Smoldergeist_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805399).addOnQuestStart(questId);
         qe.registerQuestNpc(805399).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883203).addOnKillEvent(questId);
-		qe.registerQuestNpc(883204).addOnKillEvent(questId);
-		qe.registerQuestNpc(883205).addOnKillEvent(questId);
-		qe.registerQuestNpc(883206).addOnKillEvent(questId);
-		qe.registerQuestNpc(883207).addOnKillEvent(questId);
+		qe.registerQuestNpc(883529).addOnKillEvent(questId);
+		qe.registerQuestNpc(883530).addOnKillEvent(questId);
+		qe.registerQuestNpc(883531).addOnKillEvent(questId);
+		qe.registerQuestNpc(883532).addOnKillEvent(questId);
+		qe.registerQuestNpc(883533).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15428Protect_Smoldergeist_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883203:
-				case 883204:
-				case 883205:
-				case 883206:
-				case 883207:
+                case 883529:
+				case 883530:
+				case 883531:
+				case 883532:
+				case 883533:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

@@ -34,11 +34,11 @@ public class _15415Protect_Sliversleet_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805386).addOnQuestStart(questId);
         qe.registerQuestNpc(805386).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883095).addOnKillEvent(questId);
-		qe.registerQuestNpc(883096).addOnKillEvent(questId);
-		qe.registerQuestNpc(883097).addOnKillEvent(questId);
-		qe.registerQuestNpc(883098).addOnKillEvent(questId);
-		qe.registerQuestNpc(883099).addOnKillEvent(questId);
+		qe.registerQuestNpc(883358).addOnKillEvent(questId);
+		qe.registerQuestNpc(883359).addOnKillEvent(questId);
+		qe.registerQuestNpc(883360).addOnKillEvent(questId);
+		qe.registerQuestNpc(883361).addOnKillEvent(questId);
+		qe.registerQuestNpc(883362).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15415Protect_Sliversleet_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883095:
-				case 883096:
-				case 883097:
-				case 883098:
-				case 883099:
+                case 883358:
+				case 883359:
+				case 883360:
+				case 883361:
+				case 883362:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

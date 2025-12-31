@@ -25852,4 +25852,9 @@
 			<drop chance="9.0" item_id="169000010" max_amount="5" min_amount="1"/>
 		</drop_group>
 	</npc_drop>
+	<npc_drop npc_id="701481">
+		<drop_group name="PANESTERRA_FORTRESS_REWARDS" use_category="true">
+			<drop chance ="100" item_id="188056857" min_amount="1" max_amount="1"/>
+		</drop_group>
+	</npc_drop>
 </npc_drops>

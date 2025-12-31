@@ -34,11 +34,11 @@ public class _15434Shield_Icehowl_Outpost extends QuestHandler
     public void register() {
         qe.registerQuestNpc(805389).addOnQuestStart(questId);
         qe.registerQuestNpc(805389).addOnTalkEvent(questId);
-		qe.registerQuestNpc(883005).addOnKillEvent(questId);
-		qe.registerQuestNpc(883006).addOnKillEvent(questId);
-		qe.registerQuestNpc(883007).addOnKillEvent(questId);
-		qe.registerQuestNpc(883008).addOnKillEvent(questId);
-		qe.registerQuestNpc(883009).addOnKillEvent(questId);
+		qe.registerQuestNpc(883403).addOnKillEvent(questId);
+		qe.registerQuestNpc(883404).addOnKillEvent(questId);
+		qe.registerQuestNpc(883405).addOnKillEvent(questId);
+		qe.registerQuestNpc(883406).addOnKillEvent(questId);
+		qe.registerQuestNpc(883407).addOnKillEvent(questId);
     }
 	
     @Override
@@ -83,11 +83,11 @@ public class _15434Shield_Icehowl_Outpost extends QuestHandler
         QuestState qs = player.getQuestStateList().getQuestState(questId);
         if (qs != null && qs.getStatus() == QuestStatus.START) {
             switch (env.getTargetId()) {
-                case 883005:
-				case 883006:
-				case 883007:
-				case 883008:
-				case 883009:
+                case 883403:
+				case 883404:
+				case 883405:
+				case 883406:
+				case 883407:
                 if (qs.getQuestVarById(1) < 5) {
 					qs.setQuestVarById(1, qs.getQuestVarById(1) + 1);
 					updateQuestStatus(env);

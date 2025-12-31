@@ -10658,6 +10658,9 @@
 		<drop_group name="WEAPON_SWORD_UNIQUE" use_category="true" race="PC_ALL">
 			<drop item_id="100001498" chance="1.46" min_amount="1" max_amount="1" no_reduce="false" eachmember="false" name="Savior's Sword"/>
 		</drop_group>
+		<drop_group name="SAURO_FORTUNE_KEY" use_category="true" race="PC_ALL">
+			<drop item_id="185000191" chance="100" min_amount="1" max_amount="1" no_reduce="false" eachmember="false" name="Sauro Supply Base Fortune Key"/>
+		</drop_group>
 	</npc_drop>
 	<!-- Gatekeeper Stranir -->
 	<npc_drop npc_id="233255">
